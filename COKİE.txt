@@ -1,0 +1,107 @@
+<?php
+
+   //Cookie Oluşturma
+
+   setcookie(
+    "Deneme1",
+    "Merhaba Bu Bir Çerez"
+   );
+   
+   //Ekrana Yazdırma
+
+   echo @$_COOKIE["Deneme1"]; 
+   echo "<br> <br> <br> <br> <br>"; 
+
+   //Kontrol Etme
+
+   if( isset($_COOKIE["Deneme1"])){
+    echo "Deneme1 adında bir çerez var.";
+   }
+   //Cookieyi Bir Süre Sonra Silme 
+
+   setcookie(
+    "Deneme1",
+    "Merhaba Bu Bir Çerez",
+    time() - (60*60*24*365) // - koyarsan direkt silinir
+   );
+   echo "<br> <br> <br> <hr> <br> <br>"; 
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+@$isim = $_POST["isim"];
+@$sifre = $_POST["sifre"];
+@$hatirla =$_POST["hatirla"];
+if(isset($_POST["onayla"])){
+  
+
+
+    // beni hatırla butonuna basıldıysa
+
+   if(isset($_POST["hatirla"])){
+    setcookie(
+    "isim1",
+    $isim,
+    time() + (60*60*24));
+    }
+    if(isset($_POST["hatirla"])){
+        setcookie(
+        "sifre1",
+        $sifre,
+        time() + (60*60*24));
+    }
+
+ // beni hatırla butonuna basılmadıysa
+    if(!isset($_POST["hatirla"])){
+        setcookie(
+        "isim1",
+        $isim,
+        time() - (60*60*24));
+        }
+        if(!isset($_POST["hatirla"])){
+            setcookie(
+            "sifre1",
+            $sifre,
+            time() - (60*60*24));
+        }
+
+}
+
+//sayfayı tekrar yüklediğinde ekrana gelicek mistik yazılar
+if(isset($_COOKIE["isim1"])){
+    echo "Önceden Girdiğiniz Değerler =";
+    echo ",".$_COOKIE["isim1"];
+    echo  ",".$_COOKIE["sifre1"]; 
+    echo "<br>";
+}
+
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie Denemesi</title>
+</head>
+<body>
+    <form action="" method="post">
+        İsim =<input type="text" name="isim" id="">
+        <br>
+        Şifre =<input type="password" name="sifre" id="">
+        <br>
+        <input type="submit" name="onayla" value="Gönder">
+        Beni Hatırla = <input type="radio" name="hatirla" id="">
+    </form>
+    
+</body>
+</html>
+
+
+<?php
+
+
+echo "En Son Girdiğiniz Değerler"."<br>".@$isim."<br>".@$sifre;
+
+?>
